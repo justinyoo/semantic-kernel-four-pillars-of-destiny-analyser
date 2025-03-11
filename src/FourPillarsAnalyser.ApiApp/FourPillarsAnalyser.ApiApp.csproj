@@ -9,4 +9,8 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="$(MicrosoftAspNetCoreVersion)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FourPillarsAnalyser.ServiceDefaults\FourPillarsAnalyser.ServiceDefaults.csproj" />
+  </ItemGroup>
+
 </Project>

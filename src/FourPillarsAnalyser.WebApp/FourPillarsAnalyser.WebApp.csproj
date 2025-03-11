@@ -5,4 +5,8 @@
     <RootNamespace>FourPillarsAnalyser.WebApp</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FourPillarsAnalyser.ServiceDefaults\FourPillarsAnalyser.ServiceDefaults.csproj" />
+  </ItemGroup>
+
 </Project>
