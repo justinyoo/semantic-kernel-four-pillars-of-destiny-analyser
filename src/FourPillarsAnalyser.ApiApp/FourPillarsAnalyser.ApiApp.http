@@ -1,0 +1,6 @@
+@FourPillarsAnalyser.ApiApp_HostAddress = http://localhost:5274
+
+GET {{FourPillarsAnalyser.ApiApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
