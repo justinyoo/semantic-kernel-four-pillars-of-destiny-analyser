@@ -1,12 +1,20 @@
+using FourPillarsAnalyser.WebApp.ApiClients;
 using FourPillarsAnalyser.WebApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.AddServiceDefaults();
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+builder.Services.AddHttpClient<IChatClient, ChatClient>(client =>
+{
+    var config = builder.Configuration;
+
+    client.BaseAddress = new Uri("https+http://apiapp");
+});
 
 var app = builder.Build();
 
