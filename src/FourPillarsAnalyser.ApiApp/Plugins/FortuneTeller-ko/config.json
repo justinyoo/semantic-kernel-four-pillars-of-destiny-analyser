@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "type": "completion",
+  "description": "A function that analyses the visitor's four-pillars of destiny and provides a detailed analysis of their life path, personality traits, and potential future events based on the Korean astrology system.",
+  "execution_settings": {
+    "default": {
+      "max_tokens": 3000,
+      "temperature": 0.6
+    }
+  },
+  "input_variables": [
+    {
+      "name": "visitor_details",
+      "description": "The details of the visitor including their birth date, time, city, and gender",
+      "required": true
+    }
+  ]
+}

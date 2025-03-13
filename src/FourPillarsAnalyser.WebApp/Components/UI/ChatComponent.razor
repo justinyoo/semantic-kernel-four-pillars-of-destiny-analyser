@@ -59,7 +59,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.Messages.Add(new ChatMessage("Assistant", "Hi, I'm your friendly assistant. How can I help you today?"));
+        // this.Messages.Add(new ChatMessage("Assistant", "Hi, I'm your friendly assistant. How can I help you today?"));
+        this.Messages.Add(new ChatMessage("Assistant", "안녕하세요, 당신의 운명을 예측하는 사주팔자 에이전트입니다. 당신의 정보를 알려 주세요. 생년월일, 시각, 출생도시 그리고 성별이 필요합니다."));
 
         await Task.CompletedTask;
     }

@@ -2,6 +2,7 @@ using Azure.Identity;
 
 using FourPillarsAnalyser.ApiApp.Delegates;
 using FourPillarsAnalyser.ApiApp.Endpoints;
+using FourPillarsAnalyser.ApiApp.Plugins.PersonalDetails;
 using FourPillarsAnalyser.ApiApp.Services;
 
 using Microsoft.SemanticKernel;
@@ -37,6 +38,7 @@ builder.Services.AddSingleton<Kernel>(sp =>
     var kernel = kb.Build();
 
     kernel.Plugins.AddFromObject(kernel.GetRequiredService<SessionsPythonPlugin>());
+    kernel.Plugins.AddFromType<PersonalDetailsPlugin>();
 
     return kernel;
 });

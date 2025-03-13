@@ -26,4 +26,19 @@
     <ProjectReference Include="..\FourPillarsAnalyser.ServiceDefaults\FourPillarsAnalyser.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Agents/FortuneTellerAgent/FortuneTeller.*.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </None>
+    <!-- <None Update="Plugins/FortuneTellerAgent/FortuneTeller.*.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </None>
+    <None Update="Plugins/StoryTellerAgent/StoryTeller.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </None> -->
+  </ItemGroup>
+
 </Project>

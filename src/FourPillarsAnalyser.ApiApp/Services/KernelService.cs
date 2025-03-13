@@ -18,7 +18,8 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
 {
     public async IAsyncEnumerable<string> CompleteChatStreamingAsync(IEnumerable<ChatMessageContent> messages)
     {
-        await foreach (var text in this.InvokeChatMessageContentsAsync(messages))
+        // await foreach (var text in this.InvokeChatMessageContentsAsync(messages))
+        await foreach (var text in this.InvokeFortuneTellerAgentAsync(messages))
         {
             yield return text;
         }
@@ -43,32 +44,32 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
         }
     }
 
-    // private async IAsyncEnumerable<string> InvokeStoryTellerAgentAsync(IEnumerable<ChatMessageContent> messages)
-    // {
-    //     var definition = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Plugins", "StoryTellerAgent", "StoryTeller.yaml"));
-    //     var template = KernelFunctionYaml.ToPromptTemplateConfig(definition);
-    //     var agent = new ChatCompletionAgent(template, new KernelPromptTemplateFactory())
-    //                 {
-    //                     Kernel = kernel
-    //                 };
-    //     var settings = new PromptExecutionSettings()
-    //     {
-    //         ServiceId = config["SemanticKernel:ServiceId"]
-    //     };
-    //     var arguments = new KernelArguments(settings)
-    //     {
-    //         { "topic", messages.Last().Content },
-    //         { "length", 3 }
-    //     };
-    //     var history = new ChatHistory();
-    //     history.AddRange(messages);
+    private async IAsyncEnumerable<string> InvokeFortuneTellerAgentAsync(IEnumerable<ChatMessageContent> messages)
+    {
+        var definition = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Agents", "FortuneTellerAgent", "FortuneTeller.ko.yaml"));
+        var template = KernelFunctionYaml.ToPromptTemplateConfig(definition);
+        var agent = new ChatCompletionAgent(template, new KernelPromptTemplateFactory())
+                    {
+                        Kernel = kernel
+                    };
+        var settings = new PromptExecutionSettings()
+        {
+            ServiceId = config["SemanticKernel:ServiceId"],
+            FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+        };
+        var arguments = new KernelArguments(settings)
+        {
+            { "visitor_details", messages.Last().Content },
+        };
+        var history = new ChatHistory();
+        history.AddRange(messages);
 
-    //     var result = agent.InvokeStreamingAsync(history, arguments);
-    //     await foreach (var text in result)
-    //     {
-    //         yield return text.ToString();
-    //     }
-    // }
+        var result = agent.InvokeStreamingAsync(history, arguments);
+        await foreach (var text in result)
+        {
+            yield return text.ToString();
+        }
+    }
 
     private async IAsyncEnumerable<string> InvokeAgentCollaborationsAsync(IEnumerable<ChatMessageContent> messages)
     {
