@@ -29,9 +29,14 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
         var history = new ChatHistory();
         history.AddRange(messages);
 
-        var service = kernel.GetRequiredService<IChatCompletionService>(config["SemanticKernel:ServiceId"]!);
+        var service = kernel.GetRequiredService<IChatCompletionService>();
+        var settings = new PromptExecutionSettings()
+        {
+            ServiceId = config["SemanticKernel:ServiceId"],
+            FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+        };
 
-        var result = service.GetStreamingChatMessageContentsAsync(chatHistory: history, kernel: kernel);
+        var result = service.GetStreamingChatMessageContentsAsync(chatHistory: history, executionSettings: settings, kernel: kernel);
         await foreach (var text in result)
         {
             yield return text.ToString();

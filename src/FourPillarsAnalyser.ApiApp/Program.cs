@@ -1,7 +1,11 @@
+using Azure.Identity;
+
+using FourPillarsAnalyser.ApiApp.Delegates;
 using FourPillarsAnalyser.ApiApp.Endpoints;
 using FourPillarsAnalyser.ApiApp.Services;
 
 using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Plugins.Core.CodeInterpreter;
 
 using OpenAI;
 
@@ -22,12 +26,17 @@ builder.Services.AddSingleton<Kernel>(sp =>
 
     var openAIClient = sp.GetRequiredService<OpenAIClient>();
 
-    var kernel = Kernel.CreateBuilder()
-                       .AddOpenAIChatCompletion(
-                           modelId: config["GitHub:Models:ModelId"]!,
-                           openAIClient: openAIClient,
-                           serviceId: "github")
-                       .Build();
+    var kb = Kernel.CreateBuilder()
+                   .AddOpenAIChatCompletion(
+                       modelId: config["GitHub:Models:ModelId"]!,
+                       openAIClient: openAIClient,
+                       serviceId: "github");
+    kb.Services.AddHttpClient()
+               .AddSingleton<SessionsPythonPlugin>(sp => DependencyDelegates.GetSessionsPythonPluginAsync(sp, config));
+
+    var kernel = kb.Build();
+
+    kernel.Plugins.AddFromObject(kernel.GetRequiredService<SessionsPythonPlugin>());
 
     return kernel;
 });
