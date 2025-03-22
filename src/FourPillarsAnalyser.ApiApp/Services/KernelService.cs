@@ -18,8 +18,8 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
 {
     public async IAsyncEnumerable<string> CompleteChatStreamingAsync(IEnumerable<ChatMessageContent> messages)
     {
-        // await foreach (var text in this.InvokeChatMessageContentsAsync(messages))
-        await foreach (var text in this.InvokeFortuneTellerAgentAsync(messages))
+        await foreach (var text in this.InvokeChatMessageContentsAsync(messages))
+        // await foreach (var text in this.InvokeFortuneTellerAgentAsync(messages))
         {
             yield return text;
         }
@@ -46,7 +46,11 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
 
     private async IAsyncEnumerable<string> InvokeFortuneTellerAgentAsync(IEnumerable<ChatMessageContent> messages)
     {
-        var definition = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Agents", "FortuneTellerAgent", "FortuneTeller.ko.yaml"));
+        var filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+                                    "Agents",
+                                    "FortuneTellerAgent",
+                                    "FortuneTeller.ko.yaml");
+        var definition = File.ReadAllText(filepath);
         var template = KernelFunctionYaml.ToPromptTemplateConfig(definition);
         var agent = new ChatCompletionAgent(template, new KernelPromptTemplateFactory())
                     {

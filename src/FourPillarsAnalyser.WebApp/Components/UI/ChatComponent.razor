@@ -1,5 +1,6 @@
 ﻿@using FourPillarsAnalyser.WebApp.ApiClients
 @using FourPillarsAnalyser.WebApp.Models
+@using Markdig
 @using Microsoft.JSInterop
 @inject IChatClient Chat
 @inject IJSRuntime JSRuntime
@@ -26,9 +27,15 @@
                                         <span class="visually-hidden">Loading...</span>
                                     </div>
                                 }
+                                else if (message.Role == "User")
+                                {
+                                    @((MarkupString)Markdown.ToHtml(message.Content))
+                                }
                                 else
                                 {
-                                    @((MarkupString)message.Content)
+                                    <div class="flex-grow-1 text-break">
+                                        @((MarkupString)Markdown.ToHtml(message.Content))
+                                    </div>
                                 }
                             </div>
                         }
@@ -91,7 +98,7 @@
         {
             await Task.Delay(20);
 
-            assistantChatMessage.Content += $"{text.Replace("\n", "<br />").Replace("\r", "<br />")}";
+            assistantChatMessage.Content += text;
 
             StateHasChanged();
         }
