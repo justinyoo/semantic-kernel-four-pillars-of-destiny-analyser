@@ -27,18 +27,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Agents/FortuneTellerAgent/FortuneTeller.*.yaml">
+    <None Update="Agents/**/*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </None>
-    <!-- <None Update="Plugins/FortuneTellerAgent/FortuneTeller.*.yaml">
+    <None Update="Plugins/**/*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </None>
-    <None Update="Plugins/StoryTellerAgent/StoryTeller.yaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </None> -->
   </ItemGroup>
 
 </Project>

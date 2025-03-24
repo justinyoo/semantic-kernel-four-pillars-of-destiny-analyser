@@ -30,6 +30,8 @@ template: |
     - 사주팔자 분석 결과
     - 개인의 성격 특성
     - 개인의 운명 예측 (미래 사건, 기회, 도전 등)
+
+  이제 분석 결과를 제공하세요!
 input_variables:
   - name: visitor_details
     description: The details of the visitor including their birth date, time, city, and gender
