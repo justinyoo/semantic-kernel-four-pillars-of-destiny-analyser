@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "type": "completion",
+  "description": "A function that generate Python code to calculate the perpetual calendar.",
+  "execution_settings": {
+    "default": {
+      "max_tokens": 3000,
+      "temperature": 0.0
+    }
+  },
+  "input_variables": [
+    {
+      "name": "date_of_birth",
+      "description": "The date of birth value",
+      "required": true
+    },
+    {
+      "name": "place_of_birth",
+      "description": "The place of birth value",
+      "required": true
+    }
+  ]
+}

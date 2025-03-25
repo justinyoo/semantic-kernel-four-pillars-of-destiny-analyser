@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <AssemblyName>FourPillarsAnalyser.WebApp</AssemblyName>
+    <RootNamespace>FourPillarsAnalyser.WebApp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FourPillarsAnalyser.ServiceDefaults\FourPillarsAnalyser.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

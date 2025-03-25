@@ -1,0 +1,23 @@
+name: FortuneTeller
+template: |
+  Tell a story about {{$topic}} that is {{$length}} sentences long.
+template_format: semantic-kernel
+description: A function that analyses the visitor's four-pillars of destiny and provides a detailed analysis of their life path, personality traits, and potential future events based on the Korean astrology system.
+input_variables:
+  - name: birth_date
+    description: The date of birth to calculate the perpetual calendar.
+    is_required: true
+  - name: birth_time
+    description: The time of birth to calculate the perpetual calendar.
+    is_required: true
+  - name: birth_city
+    description: The name of city where the visitor was born to calculate the perpetual calendar.
+    is_required: true
+  - name: gender
+    description: The gender of the visitor to provide detailed analysis based on the four-pillars of destiny.
+    is_required: true
+output_variable:
+  description: The analysis of the visitor's four-pillars of destiny and a detailed analysis of their life path, personality traits, and potential future events based on the Korean astrology system.
+execution_settings:
+  default:
+    temperature: 0.6

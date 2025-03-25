@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.1.0" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsAspireHost>true</IsAspireHost>
+
+    <AssemblyName>FourPillarsAnalyser.AppHost</AssemblyName>
+    <RootNamespace>FourPillarsAnalyser.AppHost</RootNamespace>
+
+    <UserSecretsId>9ebdb479-8bbd-45b1-ba5a-05a1e6ff9b7a</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
+    <PackageReference Include="Aspire.Hosting.Azure.CognitiveServices" Version="$(AspireVersion)" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.Ollama" Version="$(AspireCTVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FourPillarsAnalyser.ApiApp\FourPillarsAnalyser.ApiApp.csproj" />
+    <ProjectReference Include="..\FourPillarsAnalyser.WebApp\FourPillarsAnalyser.WebApp.csproj" />
+  </ItemGroup>
+
+</Project>
