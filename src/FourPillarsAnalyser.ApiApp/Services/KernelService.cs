@@ -17,8 +17,9 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
 {
     public async IAsyncEnumerable<string> CompleteChatStreamingAsync(IEnumerable<ChatMessageContent> messages)
     {
-        // await foreach (var text in this.InvokeChatMessageContentsAsync(messages))
-        await foreach (var text in this.InvokeFortuneTellerAgentAsync(messages))
+        await foreach (var text in this.InvokeChatMessageContentsAsync(messages))
+        // await foreach (var text in this.InvokeDynamicSessionsContentsAsync(messages))
+        // await foreach (var text in this.InvokeFortuneTellerAgentAsync(messages))
         {
             yield return text;
         }
@@ -32,8 +33,26 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var settings = new PromptExecutionSettings()
         {
+            ServiceId = config["SemanticKernel:ServiceId"]
+        };
+
+        var result = service.GetStreamingChatMessageContentsAsync(chatHistory: history, executionSettings: settings, kernel: kernel);
+        await foreach (var text in result)
+        {
+            yield return text.ToString();
+        }
+    }
+
+    private async IAsyncEnumerable<string> InvokeDynamicSessionsContentsAsync(IEnumerable<ChatMessageContent> messages)
+    {
+        var history = new ChatHistory();
+        history.AddRange(messages);
+
+        var service = kernel.GetRequiredService<IChatCompletionService>();
+        var settings = new PromptExecutionSettings()
+        {
             ServiceId = config["SemanticKernel:ServiceId"],
-            // FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+            FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
         };
 
         var result = service.GetStreamingChatMessageContentsAsync(chatHistory: history, executionSettings: settings, kernel: kernel);
