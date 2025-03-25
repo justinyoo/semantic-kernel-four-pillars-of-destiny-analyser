@@ -12,13 +12,13 @@
   <ItemGroup>
     <PackageReference Include="Aspire.Azure.AI.OpenAI" Version="$(AspirePreviewVersion)" />
     <PackageReference Include="Azure.Identity" Version="$(AzureIdentityVersion)" />
-    <!-- <PackageReference Include="CommunityToolkit.Aspire.OllamaSharp" Version="$(AspireCTVersion)" /> -->
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="$(MicrosoftAspNetCoreVersion)" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="$(MicrosoftSemanticKernelVersion)" />
     <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="$(MicrosoftSemanticKernelPreviewVersion)" />
     <PackageReference Include="Microsoft.SemanticKernel.Plugins.Core" Version="$(MicrosoftSemanticKernelPreviewVersion)" />
-    <!-- <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="$(MicrosoftSemanticKernelPreviewVersion)" /> -->
     <PackageReference Include="Microsoft.SemanticKernel.Yaml" Version="$(MicrosoftSemanticKernelVersion)" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="$(OpenTelemetryVersion)" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="$(OpenTelemetryVersion)" />
     <PackageReference Include="YamlDotNet" Version="$(YamlDotNetVersion)" />
   </ItemGroup>
 

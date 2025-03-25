@@ -86,10 +86,12 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
         var history = new ChatHistory();
         history.AddRange(messages);
 
+        // var options = new AgentInvokeOptions() { KernelArguments = arguments };
+        // var result = agent.InvokeStreamingAsync(history, options: options);
         var result = agent.InvokeStreamingAsync(history, arguments);
         await foreach (var text in result)
         {
-            yield return text.ToString();
+            yield return text.ToString()!;
         }
     }
 }

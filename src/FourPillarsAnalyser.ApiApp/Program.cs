@@ -12,6 +12,7 @@ using Microsoft.SemanticKernel.Plugins.Core.CodeInterpreter;
 
 using OpenAI;
 
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -51,13 +52,28 @@ builder.Services.AddSingleton<Kernel>(sp =>
     kb.Services.AddHttpClient()
                .AddSingleton<SessionsPythonPlugin>(sp => DependencyDelegates.GetSessionsPythonPluginAsync(sp, config));
     
+    var rb = ResourceBuilder.CreateDefault()
+                            .AddService(config["OTEL_SERVICE_NAME"]!);
     kb.Services.AddOpenTelemetry()
                .WithMetrics(mpb => mpb.AddMeter("Microsoft.SemanticKernel*")
-                                      .ConfigureResource(rb => rb.AddService("apiapp"))
+                                      .SetResourceBuilder(rb)
+                                    //   .ConfigureResource(rb => rb.AddService(config["OTEL_SERVICE_NAME"]!))
+                                      .AddConsoleExporter()
                                       .AddOtlpExporter(o => o.Endpoint = new Uri(config["OTEL_EXPORTER_OTLP_ENDPOINT"]!)))
                .WithTracing(tpb => tpb.AddSource("Microsoft.SemanticKernel*")
-                                      .ConfigureResource(rb => rb.AddService("apiapp"))
+                                      .SetResourceBuilder(rb)
+                                    //   .ConfigureResource(rb => rb.AddService(config["OTEL_SERVICE_NAME"]!))
+                                      .AddConsoleExporter()
                                       .AddOtlpExporter(o => o.Endpoint = new Uri(config["OTEL_EXPORTER_OTLP_ENDPOINT"]!)))
+               .WithLogging(lpb => lpb.SetResourceBuilder(rb)
+                                    //   .ConfigureResource(rb => rb.AddService(config["OTEL_SERVICE_NAME"]!))
+                                      .AddConsoleExporter()
+                                      .AddOtlpExporter(o => o.Endpoint = new Uri(config["OTEL_EXPORTER_OTLP_ENDPOINT"]!)),
+                             options =>
+                             {
+                                options.IncludeFormattedMessage = true;
+                                options.IncludeScopes = true;
+                             })
                ;
 
     var kernel = kb.Build();
